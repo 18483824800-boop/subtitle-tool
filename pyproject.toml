@@ -1,0 +1,29 @@
+[project]
+name = "subtitle-tool"
+version = "0.1.0"
+description = "用 Ollama 翻译和合并 SRT 字幕"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "requests>=2.31.0",
+    "pyyaml>=6.0",
+]
+
+[project.scripts]
+subtitle-tool = "subtitle_tool.main:main"
+
+[tool.black]
+line-length = 100
+
+[tool.flake8]
+max-line-length = 100
+
+[tool.mypy]
+python_version = "3.10"
+
+[[tool.mypy.overrides]]
+module = "yaml.*"
+ignore_missing_imports = true
+
+
+

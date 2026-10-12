@@ -1,0 +1,13 @@
+ollama:
+  url: "http://localhost:11434/api/generate"
+  model: "qwen2.5:7b"
+  timeout: 120
+  max_retries: 3
+  retry_delay: 2
+
+translation:
+  target_language: "Chinese"
+  temperature: 0.3
+
+output:
+  suffix: ".zh"
