@@ -11,7 +11,7 @@ jobs:
         with:
           python-version: "3.11"
       - run: pip install -r requirements.txt
-      - run: pip install pytest black flake8 mypy
+      - run: pip install pytest black flake8 mypy Flake8-pyproject
       - run: black --check .
       - run: flake8 .
       - run: mypy subtitle_tool/
