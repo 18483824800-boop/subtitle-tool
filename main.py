@@ -1,4 +1,4 @@
-# ！/usr/bin/env python3
+#!/usr/bin/env python3
 """字幕工具命令行入口"""
 
 import sys
@@ -6,7 +6,7 @@ from pathlib import Path
 
 from subtitle_tool.config import load_config
 from subtitle_tool.parse import parse_srt, build_srt
-from subtitle_tool.translate import translate_text
+from subtitle_tool.translators import OllamaTranslator
 from subtitle_tool.merge import merge_srt
 
 
@@ -17,16 +17,16 @@ def translate_srt(input_file, output_file, config):
     print(f"📊 共 {total} 个片段\n")
 
     ollama = config["ollama"]
+    translator = OllamaTranslator(
+        model=ollama["model"],
+        url=ollama["url"],
+        timeout=ollama["timeout"],
+        max_retries=ollama["max_retries"],
+        retry_delay=ollama["retry_delay"],
+    )
     for i, block in enumerate(blocks, 1):
         print(f"[{i}/{total}]")
-        block["text"] = translate_text(
-            block["text"],
-            model=ollama["model"],
-            ollama_url=ollama["url"],
-            timeout=ollama["timeout"],
-            max_retries=ollama["max_retries"],
-            retry_delay=ollama["retry_delay"],
-        )
+        block["text"] = translator.translate(block["text"])
 
     result = build_srt(blocks)
     Path(output_file).write_text(result, encoding="utf-8")
@@ -37,7 +37,7 @@ def main():
     if len(sys.argv) < 3:
         print("用法:")
         print("  python3 main.py translate <输入.srt> [输出.srt]")
-        print(". python3 main.py merge <英文.srt> <中文.srt> <输出.srt> ")
+        print("  python3 main.py merge <英文.srt> <中文.srt> <输出.srt> ")
         sys.exit(1)
     command = sys.argv[1]
     config = load_config()

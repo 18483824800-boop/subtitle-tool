@@ -2,7 +2,14 @@
 
 __version__ = "0.1.0"
 from .parse import parse_srt, build_srt
-from .translate import translate_text
+from .translators import Translator, OllamaTranslator, DeepLTranslator
 from .merge import merge_srt
 
-__all__ = ["parse_srt", "build_srt", "translate_text", "merge_srt"]
+__all__ = [
+    "parse_srt",
+    "build_srt",
+    "merge_srt",
+    "Translator",
+    "OllamaTranslator",
+    "DeepLTranslator",
+]
