@@ -34,6 +34,7 @@ class OllamaTranslator(Translator):
         )
 
         from typing import Any
+
         payload: dict[str, Any] = {
             "model": self.model,
             "prompt": prompt,
@@ -47,7 +48,7 @@ class OllamaTranslator(Translator):
                     self.url,
                     json=payload,
                     timeout=self.timeout,
-                    proxies={"http": None, "https": None}, # type: ignore[dict-item]
+                    proxies={"http": None, "https": None},  # type: ignore[dict-item]
                 )
                 resp.raise_for_status()
                 result = resp.json().get("response", "").strip()
