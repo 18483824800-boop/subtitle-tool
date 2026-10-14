@@ -5,6 +5,10 @@ ollama:
   max_retries: 3
   retry_delay: 2
 
+deepl:
+  api_key: ""
+  url: "https://api-free.deepl.com/v2/translate"
+
 translation:
   target_language: "Chinese"
   temperature: 0.3

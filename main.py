@@ -6,7 +6,7 @@ from pathlib import Path
 
 from subtitle_tool.config import load_config
 from subtitle_tool.parse import parse_srt, build_srt
-from subtitle_tool.translators import OllamaTranslator
+from subtitle_tool.translators import create_translator
 from subtitle_tool.merge import merge_srt
 
 
@@ -16,14 +16,7 @@ def translate_srt(input_file, output_file, config):
     total = len(blocks)
     print(f"📊 共 {total} 个片段\n")
 
-    ollama = config["ollama"]
-    translator = OllamaTranslator(
-        model=ollama["model"],
-        url=ollama["url"],
-        timeout=ollama["timeout"],
-        max_retries=ollama["max_retries"],
-        retry_delay=ollama["retry_delay"],
-    )
+    translator = create_translator("ollama", config)
     for i, block in enumerate(blocks, 1):
         print(f"[{i}/{total}]")
         block["text"] = translator.translate(block["text"])
