@@ -5,6 +5,7 @@ import pytest
 from subtitle_tool.translators import (
     DeepLTranslator,
     OllamaTranslator,
+    GoogleTranslator,
     create_translator,
 )
 
@@ -35,6 +36,19 @@ def test_create_deepl():
     }
     translator = create_translator("deepl", config)
     assert isinstance(translator, DeepLTranslator)
+    assert translator.api_key == "test-key"
+
+
+def test_create_google():
+    """测试google翻译器"""
+    config = {
+        "google": {
+            "api_key": "test-key",
+            "url": "https://translation.googleapis.com/language/translate/v2",
+        }
+    }
+    translator = create_translator("google", config)
+    assert isinstance(translator, GoogleTranslator)
     assert translator.api_key == "test-key"
 
 

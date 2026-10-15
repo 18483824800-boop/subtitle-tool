@@ -3,13 +3,14 @@
 from .base import Translator
 from .deepl import DeepLTranslator
 from .ollama import OllamaTranslator
+from .google import GoogleTranslator
 
 
 def create_translator(name: str, config: dict) -> Translator:
     """根据名字创建翻译器
 
     Args:
-        name: 翻译器名字（"ollama" 或 "deepl")
+        name: 翻译器名字（"ollama" 或 "deepl"或"google")
         config: 配置字典
 
     Returns:
@@ -32,6 +33,12 @@ def create_translator(name: str, config: dict) -> Translator:
         return DeepLTranslator(
             api_key=deepl.get("api_key", ""),
             url=deepl.get("url", "https://api-free.deepl.com/v2/translate"),
+        )
+    elif name == "google":
+        google = config.get("google", {})
+        return GoogleTranslator(
+            api_key=google.get("api_key", ""),
+            url=google.get("url", "https://translation.googleapis.com/language/translate/v2"),
         )
     else:
         raise ValueError(f"未知翻译器: {name}")

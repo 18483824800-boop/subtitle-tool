@@ -9,6 +9,11 @@ deepl:
   api_key: ""
   url: "https://api-free.deepl.com/v2/translate"
 
+google:
+  api_key: ""
+  url: "https://translation.googleapis.com/language/translate/v2"
+
+
 translation:
   target_language: "Chinese"
   temperature: 0.3
